@@ -25,6 +25,8 @@ input,select{font-family:inherit}
 .bigbtn{background:#fff;color:#111;border:0;border-radius:6px;padding:12px 30px;font-size:15px;font-weight:600}
 .bigbtn.ghost{background:transparent;color:#ddd;border:1px solid #555}
 .bigbtn:hover{transform:translateY(-1px)}
+#advicesub b{color:#dbe4ee;font-weight:600}
+#advicesub .advkey{color:#fff;font-size:16px;font-weight:600;letter-spacing:.02em}
 #lockscr{background:linear-gradient(160deg,#0b2a4a,#123b6b 55%,#0d5c8c);cursor:pointer}
 #lockscr .avatar{width:96px;height:96px;border-radius:50%;background:#e7eef7;color:#123b6b;font-size:38px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
 #lockscr .lname{font-size:24px;font-weight:600}
@@ -212,6 +214,13 @@ table.grid th{background:#f4f6fa;font-weight:700}
   </div>
 </div>
 
+<!-- BEFORE YOU START -->
+<div id="adviceov" class="fullov hidden">
+  <h1 id="advicetitle" style="font-size:19px;letter-spacing:.3em;font-weight:400;margin-bottom:26px"></h1>
+  <div class="sub" id="advicesub" style="text-align:left;max-width:560px"></div>
+  <div class="btnrow"><button class="bigbtn" id="advicebtn" onclick="powerOn(false)"></button></div>
+</div>
+
 <!-- LOCK SCREEN -->
 <div id="lockscr" class="fullov hidden" onclick="unlock()">
   <div class="avatar">XL</div>
@@ -254,6 +263,7 @@ const S = {
   read:{},                  // read item ids
   docsRead:{},              // folder docs read
   legalPinged:false, legalRead:false,
+  notesOpened:false,        // clue toasts stay silent until Sticky Notes is opened once
   ending:null,
   brPage:"newtab", brStack:[]
 };
@@ -270,6 +280,10 @@ const UI = {
          zh:"今天是你在 Sentia Labs 上班的第一天，职位：AI 安全研究员。\n早上 IT 送来一台笔记本，资产标签上写着前任的名字。\n\n——没有人重置过这台电脑。"},
   poweron:{en:"Power on",zh:"开机"},
   cont:{en:"Continue saved game",zh:"继续上次进度"},
+  next:{en:"Next →",zh:"继续 →"},
+  advtitle:{en:"BEFORE YOU START",zh:"开 始 之 前"},
+  advbody:{en:"You'll dig through your predecessor's email, chats and browser for specific things — her last name, her birthday, her start date, an employee-ID format, a password — and type them into login screens.\n\nThere's a <b>Sticky Notes</b> app on the desktop. It quietly copies down every key detail you read.\n\n<span class='advkey'>Try not to open it.</span>\n\nUse paper instead. That way you're doing what she did — reading, and deciding for yourself what's worth writing down. That's the good part.\n\nIt'll still be there. If you're truly stuck, open it — it's been keeping notes for you the whole time.",
+           zh:"这个游戏里，你要在前任的电脑上翻邮件、聊天记录和网页，找出一些具体的东西——她的姓氏、生日、入职日期、员工编号格式、一串密码——再把它们填进各个登录框里。\n\n桌面上有一个<b>「便签」</b>，你读到的每一条关键信息，它都会自动替你抄下来。\n\n<span class='advkey'>建议你先别打开它。</span>\n\n拿张纸自己记。这样你才会像她一样，一边读一边自己判断什么值得记下来——这正是这个游戏好玩的地方。\n\n便签一直都在。真的卡死了，随时点开，它一直替你记着。"},
   lockhint:{en:"Click anywhere to sign in — session still active",zh:"点击任意位置进入——上一个人还没退出登录"},
   clueadd:{en:"Clue saved to Sticky Notes",zh:"线索已存入便签"},
   newmsg:{en:"Microsoft Teams — new message",zh:"Microsoft Teams——新消息"},
@@ -308,7 +322,9 @@ const CLUES = {
 const CATZH = {Words:"关键词",Facts:"事实",People:"人物",Dates:"日期",Accounts:"账号"};
 function addClue(id){
   if(!CLUES[id] || S.clues.includes(id)) return;
-  S.clues.push(id); save(); toast(L(UI.clueadd)+" 🗒");
+  S.clues.push(id); save();
+  // silent until the player has opened Sticky Notes once — no "that was important" tell
+  if(S.notesOpened) toast(L(UI.clueadd)+" 🗒");
   if(APPS.notes && openWins.notes) renderWin("notes");
 }
 function clueSpan(id, txt){ return '<b class="clue" title="'+esc(L(UI.clueadd))+'">'+txt+'</b>'; }
@@ -334,7 +350,7 @@ function winFocus(el){ zTop++; el.style.zIndex=zTop; document.querySelectorAll("
 function openApp(id){
   const app=APPS[id]; if(!app) return;
   if(id==="browser" && !S.browser) return;
-  if(openWins[id]){ openWins[id].classList.remove("hidden"); winFocus(openWins[id]); renderTaskbar(); return; }
+  if(openWins[id]){ openWins[id].classList.remove("hidden"); winFocus(openWins[id]); renderWin(id); renderTaskbar(); return; }
   const el=document.createElement("div"); el.className="win"; el.dataset.app=id;
   const wpx = Math.min(app.w, window.innerWidth-30), hpx = Math.min(app.h, window.innerHeight-80);
   el.style.width=wpx+"px"; el.style.height=hpx+"px";
@@ -449,12 +465,20 @@ function showIntro2(){
   document.getElementById("introsub").textContent=L(UI.intro);
   const hasSave = (()=>{ try{return !!localStorage.getItem("offboarding_save");}catch(e){return false;} })();
   document.getElementById("introbtns").innerHTML =
-    '<button class="bigbtn" onclick="powerOn(false)">'+esc(L(UI.poweron))+'</button>'+
+    '<button class="bigbtn" onclick="showAdvice()">'+esc(L(UI.next))+'</button>'+
     (hasSave?'<button class="bigbtn ghost" onclick="powerOn(true)">'+esc(L(UI.cont))+'</button>':"");
+}
+function showAdvice(){
+  document.getElementById("advicetitle").textContent=L(UI.advtitle);
+  document.getElementById("advicesub").innerHTML=L(UI.advbody);
+  document.getElementById("advicebtn").textContent=L(UI.poweron);
+  document.getElementById("introov").classList.add("hidden");
+  document.getElementById("adviceov").classList.remove("hidden");
 }
 function powerOn(useSave){
   if(useSave) load(); else { try{localStorage.removeItem("offboarding_save");}catch(e){} }
   document.getElementById("introov").classList.add("hidden");
+  document.getElementById("adviceov").classList.add("hidden");
   document.getElementById("lockhint").textContent=L(UI.lockhint);
   document.getElementById("lockscr").classList.remove("hidden");
 }
@@ -862,6 +886,7 @@ function openShot(){
 
 /* ---------- Sticky Notes (clue book) ---------- */
 function renderNotes(host){
+  if(!S.notesOpened){ S.notesOpened=true; save(); }   // from here on, clue toasts resume
   const cats=["People","Words","Dates","Accounts","Facts"];
   let out='<div style="background:#fef7d0;min-height:100%;padding:14px 16px">';
   out+='<div style="font-size:11px;color:#997;margin-bottom:10px">'+(LANG==="zh"?"读到的加粗线索会自动记在这里。":"Bold clues you read are collected here automatically.")+'</div>';
