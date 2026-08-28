@@ -1,0 +1,453 @@
+<title>长焦纽约街拍</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+:root{
+  --paper:#FAF9F5;
+  --card:#FFFFFF;
+  --ink:#221E2B;
+  --mute:#6C687A;
+  --hair:#DEDCE6;
+  --shade:#C6C8DB;
+  --shade-wash:#EEEFF6;
+  --sun:#D8901F;
+  --sun-soft:#F6E7CC;
+  --sun-ink:#8A5A0E;
+  --warn:#B33A2B;
+  --warn-wash:#FBEDEA;
+  --mono:"IBM Plex Mono","SFMono-Regular",Menlo,Consolas,monospace;
+  --disp:"Archivo","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --body:"Source Serif 4","Songti SC","PingFang SC","Microsoft YaHei",Georgia,serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#15141B;
+    --card:#1D1B25;
+    --ink:#EEECF4;
+    --mute:#9C98AB;
+    --hair:#302E3C;
+    --shade:#4A4859;
+    --shade-wash:#242231;
+    --sun:#EDB157;
+    --sun-soft:#3A2E1A;
+    --sun-ink:#F0C382;
+    --warn:#E58374;
+    --warn-wash:#33211E;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#15141B;
+  --card:#1D1B25;
+  --ink:#EEECF4;
+  --mute:#9C98AB;
+  --hair:#302E3C;
+  --shade:#4A4859;
+  --shade-wash:#242231;
+  --sun:#EDB157;
+  --sun-soft:#3A2E1A;
+  --sun-ink:#F0C382;
+  --warn:#E58374;
+  --warn-wash:#33211E;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16.5px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:940px;margin:0 auto;padding:0 26px 96px}
+
+/* ---------- masthead ---------- */
+.mast{position:relative;overflow:hidden;padding:64px 26px 46px;margin-bottom:8px}
+.mast::before{
+  content:"";position:absolute;inset:-40% -10% auto -10%;height:340px;pointer-events:none;
+  background:
+    radial-gradient(120px 90px at 12% 60%, var(--shade) 0%, transparent 68%),
+    radial-gradient(160px 110px at 34% 30%, var(--shade) 0%, transparent 70%),
+    radial-gradient(90px 70px at 52% 72%, var(--shade) 0%, transparent 66%),
+    radial-gradient(200px 130px at 78% 40%, var(--sun) 0%, transparent 72%),
+    radial-gradient(110px 80px at 92% 78%, var(--shade) 0%, transparent 68%);
+  opacity:.34;filter:blur(14px);
+}
+.mast-in{position:relative;max-width:940px;margin:0 auto}
+.eyebrow{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--mute);margin:0 0 18px
+}
+h1{
+  font-family:var(--disp);font-weight:700;font-size:clamp(38px,7vw,64px);
+  line-height:1.02;letter-spacing:-.015em;margin:0 0 18px;text-wrap:balance;
+}
+h1 .sun{color:var(--sun)}
+.dek{font-size:19px;line-height:1.6;color:var(--mute);max-width:38em;margin:0}
+.specline{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;
+}
+.specline span{
+  border:1px solid var(--hair);border-radius:2px;padding:4px 9px;color:var(--mute);background:var(--card);
+}
+
+/* ---------- sections ---------- */
+section{margin-top:58px}
+h2{
+  font-family:var(--disp);font-weight:600;font-size:14px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink);margin:0 0 6px;display:flex;align-items:baseline;gap:12px;
+}
+h2::after{content:"";flex:1;height:1px;background:var(--hair)}
+.sub{color:var(--mute);font-size:15px;margin:0 0 22px;max-width:40em}
+h3{font-family:var(--disp);font-weight:600;font-size:17px;letter-spacing:-.005em;margin:0 0 6px}
+p{margin:0 0 14px}
+strong{font-weight:600}
+
+/* ---------- prompt blocks ---------- */
+.prompt{
+  background:var(--card);border:1px solid var(--hair);border-radius:3px;
+  margin-bottom:20px;overflow:hidden;
+}
+.prompt-top{
+  display:flex;align-items:center;gap:12px;padding:9px 14px;
+  border-bottom:1px solid var(--hair);background:var(--shade-wash);
+}
+.prompt-top .tag{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);
+}
+.prompt-top .tag.hot{color:var(--sun-ink)}
+.prompt-top .tag.no{color:var(--warn)}
+.copy{
+  margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+  background:transparent;border:1px solid var(--hair);color:var(--mute);
+  border-radius:2px;padding:3px 10px;cursor:pointer;transition:.15s;
+}
+.copy:hover{border-color:var(--sun);color:var(--sun-ink)}
+.copy:focus-visible{outline:2px solid var(--sun);outline-offset:2px}
+.prompt pre{
+  margin:0;padding:16px 18px;font-family:var(--mono);font-size:13px;line-height:1.78;
+  white-space:pre-wrap;word-break:break-word;color:var(--ink);overflow-x:auto;
+}
+.prompt.neg pre{color:var(--warn)}
+.prompt.neg .prompt-top{background:var(--warn-wash)}
+
+/* ---------- contact sheet ---------- */
+.sheet{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
+  background:var(--shade-wash);border:1px solid var(--hair);border-radius:4px;padding:14px;
+}
+.frame{
+  background:var(--card);border:1px solid var(--hair);border-radius:10px;padding:16px 17px 18px;
+  display:flex;flex-direction:column;gap:9px;position:relative;
+}
+.frame .no{
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--sun-ink);
+  background:var(--sun-soft);border-radius:2px;padding:2px 7px;align-self:flex-start;
+}
+.frame h3{margin:0}
+.frame .zh{color:var(--mute);font-size:13.5px;font-family:var(--mono);letter-spacing:.02em}
+.frame p{margin:0;font-size:15px;line-height:1.6}
+.frame .cue{
+  margin-top:auto;padding-top:11px;border-top:1px dashed var(--hair);
+  font-family:var(--mono);font-size:12px;line-height:1.65;color:var(--mute);
+}
+.frame .cue b{color:var(--ink);font-weight:500}
+@media (max-width:620px){.sheet{grid-template-columns:1fr}}
+
+/* ---------- diagram ---------- */
+.diagram{
+  background:var(--card);border:1px solid var(--hair);border-radius:3px;padding:20px 18px 12px;
+  overflow-x:auto;
+}
+.diagram svg{display:block;width:100%;min-width:520px;height:auto}
+.dg-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em}
+
+/* ---------- table ---------- */
+.tablewrap{overflow-x:auto;border:1px solid var(--hair);border-radius:3px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px}
+th,td{text-align:left;padding:11px 15px;border-bottom:1px solid var(--hair);vertical-align:top}
+th{
+  font-family:var(--disp);font-weight:600;font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--mute);background:var(--shade-wash);
+}
+td:first-child{font-family:var(--mono);font-size:13px;white-space:nowrap;color:var(--sun-ink)}
+tr:last-child td{border-bottom:0}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- lists ---------- */
+ul.plain{list-style:none;padding:0;margin:0;display:grid;gap:11px}
+ul.plain li{padding-left:19px;position:relative;font-size:15.5px;line-height:1.62}
+ul.plain li::before{
+  content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:1px;
+  background:var(--sun);
+}
+ul.plain.no li::before{background:var(--warn)}
+
+/* ---------- two-up ---------- */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+@media (max-width:700px){.two{grid-template-columns:1fr}}
+.note{
+  background:var(--shade-wash);border-left:3px solid var(--sun);border-radius:0 3px 3px 0;
+  padding:14px 17px;font-size:15px;color:var(--ink);
+}
+.note b{font-weight:600}
+footer{
+  margin-top:70px;padding-top:22px;border-top:1px solid var(--hair);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--mute);
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="mast">
+  <div class="mast-in">
+    <p class="eyebrow">Shot Brief · 135mm · New York</p>
+    <h1>长焦下的<br><span class="sun">明媚</span>纽约街拍</h1>
+    <p class="dek">六到八米开外、长焦压缩、全身与七分身。走路、骑车、抱臂，可爱、搞怪、假装生气。一份可直接粘贴的提示词，加上真机拍摄时的参数与走位。</p>
+    <div class="specline">
+      <span>135mm f/2.8</span>
+      <span>距离 6–8 m</span>
+      <span>高调 +1 EV</span>
+      <span>树影 · 直射阳光</span>
+      <span>轻微 CCD 颗粒</span>
+      <span>3:4 竖幅</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section>
+  <h2>主提示词</h2>
+  <p class="sub">配合参考图使用（Nano Banana / Gemini Image、Seedream、即梦都支持参考图 + 文本）。人物特征已写死：短卷黑发波波头、细碎空气刘海、奶白高领毛衣。</p>
+
+  <div class="prompt">
+    <div class="prompt-top"><span class="tag hot">English · Master</span><button class="copy" data-copy="p-en" data-label="Copy">Copy</button></div>
+<pre id="p-en">Candid full-body street portrait of the same young East Asian woman as the reference image — short wavy black bob, soft wispy blunt bangs, cream white ribbed turtleneck sweater, straight mid-blue jeans, white sneakers. Keep her face, hairstyle and outfit identical to the reference.
+
+Shot from 6-8 meters away on a 135mm telephoto lens at f/2.8. Strongly compressed perspective, flattened background, true natural body proportions, absolutely no wide-angle stretch or barrel distortion. Camera at her chest height, level, never tilted up or down.
+
+She is caught mid-motion on a sunlit New York City sidewalk: walking toward camera mid-stride, hair and sweater hem lifting. Background compresses into a soft creamy blur of yellow cabs, cast-iron facades, fire escapes, bodega awnings and a green street sign.
+
+Bright clear midday sunshine with dappled tree shadows falling across her face, shoulders and the pavement. High-key exposure, +1 EV, luminous open shadows with no crushed blacks, airy bright whites, warm sunlight rim on her hair, clean neutral highlights.
+
+Early-2000s CCD compact camera rendering: fine luminance grain, gentle highlight bloom, slightly punchy contrast, faint purple fringing at highlight edges, natural cool-neutral skin tone, in-camera sharpening.
+
+Vertical 3:4, sharp on the eyes, shallow depth of field, candid documentary feel.</pre>
+  </div>
+
+  <div class="prompt">
+    <div class="prompt-top"><span class="tag">中文 · 主提示词</span><button class="copy" data-copy="p-zh" data-label="复制">复制</button></div>
+<pre id="p-zh">与参考图同一位东亚年轻女性的抓拍全身街头肖像——短卷黑发波波头、柔软细碎的空气刘海、奶白色罗纹高领毛衣、直筒中蓝色牛仔裤、白色板鞋。五官、发型与服装与参考图保持一致。
+
+摄影师站在 6–8 米外，使用 135mm 长焦镜头，光圈 f/2.8。强烈的长焦空间压缩，背景被压平，身材比例真实自然，绝对没有广角拉伸或桶形畸变。相机与她胸口同高、保持水平，不俯不仰。
+
+她在阳光充沛的纽约人行道上被抓拍到动态瞬间：迈步向镜头走来，头发与毛衣下摆被带起。背景压缩成柔软奶油般的虚化——黄色出租车、铸铁老楼立面、消防梯、杂货店雨棚、绿色路牌。
+
+明媚通透的正午阳光，斑驳树影落在她的脸、肩与地面。高调曝光，+1 EV，暗部通透不死黑，白色明亮轻盈，头发边缘有暖色轮廓光，高光干净中性。
+
+千禧年初 CCD 卡片机的成像质感：细腻亮度颗粒、柔和高光溢出、略微硬朗的对比、高光边缘轻微紫边、自然偏冷中性的肤色、机内锐化痕迹。
+
+3:4 竖幅，眼睛清晰锐利，浅景深，纪实抓拍感。</pre>
+  </div>
+
+  <div class="prompt neg">
+    <div class="prompt-top"><span class="tag no">Negative · 必须避免</span><button class="copy" data-copy="p-neg" data-label="Copy">Copy</button></div>
+<pre id="p-neg">wide-angle distortion, fisheye, barrel distortion, stretched limbs, enlarged head, low camera angle looking up, dark moody grading, muddy grey tones, heavy crushed shadows, underexposed, low-contrast haze, teal-and-orange grading, HDR over-processing, studio backdrop, seamless paper background, tight close-up headshot only, plastic over-retouched skin, blurred face, heavy motion blur, watermark, text, extra fingers</pre>
+  </div>
+
+  <div class="note"><b>平台参数。</b>Midjourney 加 <code>--ar 3:4 --style raw --s 100</code>；Nano Banana / Gemini Image 直接把参考图和主提示词一起丢进去，并加一句「保持参考图人物一致」；Seedream / 即梦选 3:4，参考图强度 0.5–0.65（太高会锁死表情，六格就出不来差异）。</div>
+</section>
+
+<section>
+  <h2>六格：走位、表情、景别</h2>
+  <p class="sub">按参考图的 2×3 排布来拍。每格换一件事——姿态或表情，不要两样一起换，不然一组照片看起来不像同一次拍摄。把下面的「本格替换」整段接在主提示词后面即可。</p>
+
+  <div class="sheet">
+    <div class="frame">
+      <span class="no">Frame 01</span>
+      <h3>迎面走来</h3>
+      <div class="zh">走路 · 全身 · 自然笑</div>
+      <p>迈步瞬间，前脚落地后脚离地，双手自然摆动，目光越过镜头看向斜前方，笑到眼睛眯起。</p>
+      <div class="cue"><b>本格替换：</b>walking toward camera mid-stride, one foot lifted, arms swinging naturally, looking slightly past the lens, bright squinting smile, full body head-to-toe</div>
+    </div>
+
+    <div class="frame">
+      <span class="no">Frame 02</span>
+      <h3>骑车回头</h3>
+      <div class="zh">骑车 · 七分身 · 追焦</div>
+      <p>横向骑过镜头，一只手扶车把，回头看向镜头咧嘴笑。轻微追焦让背景带一点横向流动，人保持锐利。</p>
+      <div class="cue"><b>本格替换：</b>riding a vintage city bicycle across the frame, one hand on the handlebar, glancing back over her shoulder at the camera with an open grin, subtle horizontal panning blur in the background, she stays sharp, three-quarter body</div>
+    </div>
+
+    <div class="frame">
+      <span class="no">Frame 03</span>
+      <h3>抱臂站定</h3>
+      <div class="zh">抱臂 · 七分身 · 微不耐烦</div>
+      <p>停在路边抱起双臂，重心压在一条腿上，胯微微出去，下巴略收，眉毛挑起，一副「你拍够没有」。</p>
+      <div class="cue"><b>本格替换：</b>standing still at the curb with arms crossed, weight on one hip, chin slightly tucked, one eyebrow raised, faintly impatient half-smile, knee-up three-quarter framing</div>
+    </div>
+
+    <div class="frame">
+      <span class="no">Frame 04</span>
+      <h3>可爱</h3>
+      <div class="zh">表情 · 七分身 · 逆光眯眼</div>
+      <p>双手在下巴两侧比小花，头歪向有阳光的一侧，被晒得眯起眼睛，肩膀耸起来。阳光从侧后打进发梢。</p>
+      <div class="cue"><b>本格替换：</b>hands framing her chin, head tilted toward the sun, eyes squinting in the bright light, shoulders raised, playful cute expression, warm backlit rim on her hair</div>
+    </div>
+
+    <div class="frame">
+      <span class="no">Frame 05</span>
+      <h3>搞怪</h3>
+      <div class="zh">表情 · 全身 · 跳起</div>
+      <p>大跨步或小跳起来，吐舌头、鼓一边脸颊，双手乱挥出一点残影，脚离地。整组里最松的一张。</p>
+      <div class="cue"><b>本格替换：</b>caught mid-jump with both feet off the ground, tongue out, one cheek puffed, hands flailing with slight motion trails, goofy silly expression, full body with headroom above her</div>
+    </div>
+
+    <div class="frame">
+      <span class="no">Frame 06</span>
+      <h3>假装生气</h3>
+      <div class="zh">表情 · 七分身 · 逼近</div>
+      <p>皱眉、鼓起两腮，抬手指向镜头并往前迈一步——长焦下这一步会让她瞬间充满画面，气势最强。</p>
+      <div class="cue"><b>本格替换：</b>frowning with both cheeks puffed, pointing straight at the camera and taking a step forward, mock-angry pout, filling more of the frame, sunlight raking across her face</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>距离与焦段：为什么必须退到六米外</h2>
+  <p class="sub">决定脸型的是拍摄距离，不是镜头。退远、换长焦，鼻子和脸颊才不会被放大；凑近用广角，脸会变形、四肢被拉长——正是要避免的那种。</p>
+
+  <div class="diagram">
+    <svg viewBox="0 0 760 250" role="img" aria-label="俯视示意图：上方为 1.5 米广角，下方为 7 米 135mm 长焦">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 5 L0 10 z" fill="currentColor"></path>
+        </marker>
+      </defs>
+
+      <!-- row 1: wide angle -->
+      <g color="var(--warn)">
+        <text x="0" y="14" class="dg-label" fill="var(--warn)">✗ 24mm ／ 1.5 m</text>
+        <circle cx="60" cy="58" r="8" fill="none" stroke="var(--warn)" stroke-width="1.5"></circle>
+        <path d="M60 58 L200 16 M60 58 L200 100" stroke="var(--warn)" stroke-width="1" stroke-dasharray="3 3" fill="none"></path>
+        <path d="M68 58 L150 58" stroke="var(--warn)" stroke-width="1.2" marker-end="url(#ar)" fill="none"></path>
+        <circle cx="168" cy="58" r="11" fill="var(--warn-wash)" stroke="var(--warn)" stroke-width="1.5"></circle>
+        <text x="215" y="50" class="dg-label" fill="var(--warn)">脸被放大、四肢拉长</text>
+        <text x="215" y="68" class="dg-label" fill="var(--mute)">背景发散、街道被推远</text>
+      </g>
+
+      <line x1="0" y1="118" x2="760" y2="118" stroke="var(--hair)" stroke-width="1"></line>
+
+      <!-- row 2: telephoto -->
+      <g>
+        <text x="0" y="150" class="dg-label" fill="var(--sun-ink)">✓ 135mm ／ 7 m</text>
+        <circle cx="60" cy="196" r="8" fill="none" stroke="var(--sun)" stroke-width="1.5"></circle>
+        <path d="M60 196 L560 176 M60 196 L560 216" stroke="var(--sun)" stroke-width="1" stroke-dasharray="3 3" fill="none"></path>
+        <path d="M68 196 L520 196" stroke="var(--sun)" stroke-width="1.2" marker-end="url(#ar)" fill="none" color="var(--sun)"></path>
+        <text x="250" y="188" class="dg-label" fill="var(--mute)">6 – 8 米</text>
+        <circle cx="540" cy="196" r="11" fill="var(--sun-soft)" stroke="var(--sun)" stroke-width="1.5"></circle>
+        <text x="580" y="188" class="dg-label" fill="var(--sun-ink)">比例真实</text>
+        <text x="580" y="206" class="dg-label" fill="var(--mute)">背景压缩成一片</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="tablewrap" style="margin-top:18px">
+    <table>
+      <tr><th>焦段 ／ 距离</th><th>得到的景别</th><th>用在哪一格</th></tr>
+      <tr><td class="num">135mm · 7–8 m</td><td>全身，头顶到鞋子，上下留白充足</td><td>Frame 01 走路、Frame 05 跳起</td></tr>
+      <tr><td class="num">135mm · 5–6 m</td><td>七分身，膝盖以上</td><td>Frame 03 抱臂、Frame 04 可爱</td></tr>
+      <tr><td class="num">200mm · 8–10 m</td><td>半身，背景压缩最狠</td><td>Frame 06 假装生气</td></tr>
+      <tr><td class="num">85mm · 4–5 m</td><td>七分身，街道透视稍多一点</td><td>人行道太窄退不开时的备选</td></tr>
+      <tr><td class="num">≤ 35mm · 1–2 m</td><td>脸变形、腿被拉长</td><td>这次不用</td></tr>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>真机参数</h2>
+  <div class="two">
+    <div>
+      <h3>机身设置</h3>
+      <ul class="plain">
+        <li><strong>镜头</strong>：70–200mm f/2.8，多数时候停在 135mm。</li>
+        <li><strong>光圈</strong> f/2.8–f/4。全身用 f/4，背景已经够虚，人也全在景深里。</li>
+        <li><strong>快门</strong> 1/1000s 起步；骑车那格上到 1/1600s 以上。</li>
+        <li><strong>ISO</strong> 100–200，颗粒留给后期加，别让高感来凑。</li>
+        <li><strong>曝光补偿</strong> +0.7 到 +1.3 EV，白毛衣压着不过曝即可——高调的关键在这里。</li>
+        <li><strong>对焦</strong> 连续伺服 + 眼控，高速连拍；走路和跳起都靠连拍捡瞬间。</li>
+        <li><strong>白平衡</strong> 日光 5200K 固定，别用自动，六张会飘色。</li>
+      </ul>
+    </div>
+    <div>
+      <h3>现场走位</h3>
+      <ul class="plain">
+        <li><strong>时间</strong>：上午 9–11 点或下午 3:30–5 点。正午顶光眼窝会黑。</li>
+        <li><strong>站位</strong>：把她放在树影的边缘上，半边脸在光里、半边在斑驳影里，这就是参考图那种通透感的来源。</li>
+        <li><strong>光向</strong>：侧逆光，太阳在她斜后方，发丝出轮廓光；正面对着太阳只会眯眼皱眉。</li>
+        <li><strong>背景</strong>：找一条能一眼认出纽约的纵深——黄车、消防梯、绿路牌、铸铁立面。长焦会把它们叠成一片。</li>
+        <li><strong>沟通</strong>：六米外喊不清楚，先把六格过一遍，再用手势切换；每格连拍 15–20 张。</li>
+        <li><strong>取景</strong>：全身留出头顶空间和脚下地面，别切脚踝。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:22px"><b>取景地。</b>SoHo 格林街的铸铁楼与石板路；西村 Perry / Bleecker 一带的梧桐树荫；Nolita 的 Elizabeth 街；DUMBO 的 Washington 街；中央公园西侧人行道的悬铃木。都能同时给到树影、纵深和一眼纽约。</div>
+</section>
+
+<section>
+  <h2>高调与 CCD 质感</h2>
+  <p class="sub">「轻微」是重点。CCD 味一旦调过头就变成滤镜，参考图的克制感就没了。</p>
+  <div class="two">
+    <div>
+      <h3>后期配方</h3>
+      <ul class="plain">
+        <li>曝光整体 <span class="num">+0.3</span>，黑色阶 <span class="num">+15 到 +25</span>，把暗部提起来——通透不死黑。</li>
+        <li>高光 <span class="num">−20</span> 保住毛衣纹理，白色阶 <span class="num">+10</span> 让白真的白。</li>
+        <li>色温不动，色调往洋红 <span class="num">+3</span>，肤色偏冷中性一点，这是 CCD 的底色。</li>
+        <li>亮度颗粒 <span class="num">8–12%</span>，颗粒尺寸偏细；不要加彩色噪点。</li>
+        <li>清晰度归零或负一点，锐化用小半径高数量，模仿机内锐化的细边。</li>
+        <li>高光边缘留一点点紫边——不用刻意加，别去消就行。</li>
+      </ul>
+    </div>
+    <div>
+      <h3>不要出现</h3>
+      <ul class="plain no">
+        <li>灰蒙蒙的低对比「胶片褪色」调子。</li>
+        <li>压暗的暗角与深色阴影，会直接杀掉高调。</li>
+        <li>青橙电影调，这组要的是干净日光。</li>
+        <li>广角凑近拍的畸变脸、被拉长的腿。</li>
+        <li>磨到没有毛孔的皮肤，配上颗粒会很假。</li>
+        <li>仰拍。相机始终与胸口同高。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>135mm · f/2.8 · 1/1000s · ISO 100 · +1 EV — 拍摄提示词手册</footer>
+</div>
+
+<script>
+document.querySelectorAll(".copy").forEach(function(btn){
+  btn.addEventListener("click", function(){
+    var el = document.getElementById(btn.dataset.copy);
+    var label = btn.dataset.label;
+    var done = function(msg){ btn.textContent = msg; setTimeout(function(){ btn.textContent = label; }, 1800); };
+    try{
+      navigator.clipboard.writeText(el.innerText).then(function(){ done("✓"); }, function(){ select(el); done("⌘C"); });
+    }catch(e){ select(el); done("⌘C"); }
+  });
+});
+function select(el){
+  try{
+    var r = document.createRange();
+    r.selectNodeContents(el);
+    var s = window.getSelection();
+    s.removeAllRanges();
+    s.addRange(r);
+  }catch(e){}
+}
+</script>
